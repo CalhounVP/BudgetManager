@@ -125,6 +125,7 @@ public class TerminalTool {
                 }
             } catch (Exception ex) {
                 System.out.println("Invalid input, please input a number between 0-2");
+                keyboard.nextLine();
             }
         }
         return selection;
@@ -140,6 +141,7 @@ public class TerminalTool {
                 input = keyboard.nextDouble();
             } catch (Exception ex) {
                 System.out.println("Invalid input, please enter a number");
+                keyboard.nextLine();
             }
         }
         return BigDecimal.valueOf(input);
