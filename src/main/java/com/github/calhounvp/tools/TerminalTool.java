@@ -29,7 +29,7 @@ public class TerminalTool {
     //*********************************Utility Method*******************************
     public static String startUpMessage() {
         //local variable
-        String userName = "";
+        String userName;
 
         //statements
         //start scanner
@@ -117,6 +117,7 @@ public class TerminalTool {
         int selection = -1;
 
         //statements
+        //loop until a valid input is given
         while (selection < 0 || selection > 2) {
             try {
                 selection = keyboard.nextInt();
@@ -125,6 +126,7 @@ public class TerminalTool {
                 }
             } catch (Exception ex) {
                 System.out.println("Invalid input, please input a number between 0-2");
+                //clear scanner buffer to allow for new input
                 keyboard.nextLine();
             }
         }
@@ -136,11 +138,13 @@ public class TerminalTool {
         double input = 0.0;
 
         //statements
+        //loop until a valid input is given
         while (input <= 0.0) {
             try {
                 input = keyboard.nextDouble();
             } catch (Exception ex) {
                 System.out.println("Invalid input, please enter a number");
+                //clear scanner buffer to allow for new input
                 keyboard.nextLine();
             }
         }
@@ -153,6 +157,7 @@ public class TerminalTool {
         Scanner kbd = new Scanner(System.in);
 
         //statements
+        //loop until a valid input is given
         while (reason.isBlank()) {
             try {
                 reason = kbd.nextLine().strip();
@@ -172,6 +177,7 @@ public class TerminalTool {
         String userName = "";
 
         //statements
+        //loop until a valid input is given
         //if username is empty or has a symbol other than a-z, '.' or ' ' it will ask for input
         while (userName.isEmpty() || pattern.matcher(userName).find()) {
             try {

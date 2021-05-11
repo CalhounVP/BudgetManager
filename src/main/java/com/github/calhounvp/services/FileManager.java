@@ -133,24 +133,19 @@ public class FileManager {
     }
 
     private void createParentDirectory (Path path) {
-
         try {
             path.toFile().getParentFile().mkdirs();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
     }
 
     private void createFile (Path path) {
-
         try {
            path.toFile().createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void prepareFile (boolean fileExists, Path path) {

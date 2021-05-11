@@ -22,12 +22,12 @@ public class JsonService {
     //____________________________________Methods___________________________________
     //*********************************Utility Method*******************************
     @SuppressWarnings("unchecked")
-    public String getUsersJsonString (ArrayList<User> users) {
+    public String getUsersJsonString(ArrayList<User> users) {
         //local variable
         JSONArray usersList = new JSONArray();
 
         //statements
-        for (User user: users) {
+        for (User user : users) {
             usersList.add(createUserJsonObject(user));
         }
 
@@ -35,12 +35,12 @@ public class JsonService {
     }
 
     @SuppressWarnings("unchecked")
-    public String getRequestJsonString (ArrayList<SpendRequest> requests) {
+    public String getRequestJsonString(ArrayList<SpendRequest> requests) {
         //local variable
         JSONArray requestList = new JSONArray();
 
         //statements
-        for (SpendRequest request: requests) {
+        for (SpendRequest request : requests) {
             requestList.add(createSpendRequestJsonObject(request));
         }
 
@@ -48,7 +48,7 @@ public class JsonService {
     }
 
     @SuppressWarnings("unchecked")
-    public ArrayList<User> getUserList (FileReader userFileReader) {
+    public ArrayList<User> getUserList(FileReader userFileReader) {
         //local variables
         ArrayList<User> usersList = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
@@ -57,7 +57,7 @@ public class JsonService {
         //statements
         try {
             usersJsonArray = (JSONArray) jsonParser.parse(userFileReader);
-            usersJsonArray.forEach( user -> usersList.add(getUser((JSONObject) user)));
+            usersJsonArray.forEach(user -> usersList.add(getUser((JSONObject) user)));
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class JsonService {
     }
 
     @SuppressWarnings("unchecked")
-    public ArrayList<SpendRequest> getSpendRequestList (FileReader requestFileReader) {
+    public ArrayList<SpendRequest> getSpendRequestList(FileReader requestFileReader) {
         //local variables
         ArrayList<SpendRequest> requestsList = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
@@ -98,26 +98,21 @@ public class JsonService {
     }
 
     @SuppressWarnings("unchecked")
-    private JSONObject createSpendRequestJsonObject (SpendRequest request) {
+    private JSONObject createSpendRequestJsonObject(SpendRequest request) {
         //local variables
         JSONObject requestDetails = new JSONObject();
         JSONObject requestObject = new JSONObject();
-        SpendRequest.Status[] statuses = SpendRequest.Status.values();
 
         //statements
         requestDetails.put("reason", request.getRequestInfo());
         requestDetails.put("budget", request.getRequestCost());
-        for (int i = 0; i < statuses.length; i++) {
-            if (statuses[i].equals(request.getStatus())) {
-                requestDetails.put("status", i);
-            }
-        }
+        requestDetails.put("status", request.getStatus().ordinal());
         requestObject.put("request", requestDetails);
 
         return requestObject;
     }
 
-    private User getUser (JSONObject user) {
+    private User getUser(JSONObject user) {
         //local variables
         String userName = "";
         JSONObject userDetails = null;
@@ -129,21 +124,21 @@ public class JsonService {
         return new User(userName, null);
     }
 
-    private SpendRequest getSpendRequest (JSONObject request) {
+    private SpendRequest getSpendRequest(JSONObject request) {
         //local variables
         SpendRequest.Status[] statuses = SpendRequest.Status.values();
         JSONObject requestDetails = null;
         String info = "";
         BigDecimal budget = null;
         SpendRequest.Status status = null;
-        Long arrayValue = null;
+        Long ordinal = null;
 
         //statements
         requestDetails = (JSONObject) request.get("request");
         info = (String) requestDetails.get("reason");
         budget = BigDecimal.valueOf((double) requestDetails.get("budget"));
-        arrayValue = (Long) requestDetails.get("status");
-        status = statuses[Math.toIntExact(arrayValue)];
+        ordinal = (Long) requestDetails.get("status");
+        status = statuses[Math.toIntExact(ordinal)];
 
         return new SpendRequest(info, budget, status);
     }

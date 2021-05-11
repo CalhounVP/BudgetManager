@@ -37,6 +37,7 @@ public class User {
     //____________________________________Methods___________________________________
     //************************************setters***********************************
     private void setAmountSpentNow() {
+        //it will make the sum of all the approved requests so you know the amount spent this period
         this.amountSpent = currentRequests.stream()
                                             .filter(spendRequest -> spendRequest.getStatus()
                                                         .equals(SpendRequest.Status.APPROVED))
@@ -45,6 +46,7 @@ public class User {
     }
 
     public void setCurrentRequests(ArrayList<SpendRequest> currentRequests) {
+        //if the currentRequests arrayList is null it will create an empty one
         this.currentRequests = Objects.requireNonNullElseGet(currentRequests, ArrayList::new);
         this.setAmountSpentNow();
     }

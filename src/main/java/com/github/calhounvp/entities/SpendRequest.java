@@ -19,10 +19,12 @@ public class SpendRequest {
     }
 
     //_________________________________Constructors_________________________________
+    //for the standard creation within the application the status will start as pending
     public SpendRequest(String requestInfo, BigDecimal requestCost) {
         this(requestInfo, requestCost, Status.PENDING);
     }
 
+    //for the json file requests though the status can be different so needs to be included
     public SpendRequest(String requestInfo, BigDecimal requestCost, Status status) {
         this.requestInfo = requestInfo;
         this.requestCost = requestCost;
@@ -32,9 +34,7 @@ public class SpendRequest {
     //____________________________________Methods___________________________________
     //************************************setters***********************************
     public void setStatus(Status status) {
-        if (!this.status.equals(status)) {
-            this.status = status;
-        }
+        this.status = status;
     }
 
     //************************************getters***********************************
@@ -53,6 +53,7 @@ public class SpendRequest {
     //********************************Inherited Method******************************
     @Override
     public String toString() {
+        //a nice string version made to be used for the email list printout
         return String.format("%.2f€: %s %n", requestCost.doubleValue(), requestInfo);
     }
 }

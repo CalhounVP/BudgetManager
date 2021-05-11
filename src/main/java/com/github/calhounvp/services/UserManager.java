@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class UserManager {
     //__________________________________Properties__________________________________
     private ArrayList<User> users;
-    private User currentUser;
-    private FileManager fileManager;
-    private JsonService jsonService;
+    private final User currentUser;
+    private final FileManager fileManager;
+    private final JsonService jsonService;
 
     //_________________________________Constructors_________________________________
     public UserManager(String userName) {
@@ -87,7 +87,8 @@ public class UserManager {
 
     private void setCurrentUserRequests() {
         if (fileManager.isStartupUserRecordExists()) {
-            currentUser.setCurrentRequests(jsonService.getSpendRequestList(fileManager.getUserRecordReader()));
+            currentUser.setCurrentRequests(jsonService.getSpendRequestList(
+                                                fileManager.getUserRecordReader()));
         }
     }
 
